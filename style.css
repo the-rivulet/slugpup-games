@@ -1,0 +1,48 @@
+html {
+    background: #333;
+    color: white;
+}
+.pup {
+    background: #555;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 120px 150px;
+    grid-template-rows: 40px 60px 30px;
+    grid-template-areas:
+        "i b s"
+        "i . s"
+        "n n s";
+}
+.pupimg {
+    background: #c6a;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 5px;
+    grid-area: i;
+    width: 80px;
+}
+.statbutton {
+    background: #888;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 5px;
+    color: white;
+    cursor: pointer;
+    grid-area: b;
+}
+.name {
+    background: #aaa;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 2px;
+    color: white;
+    grid-area: n;
+}
+.pupstats {
+    opacity: 0.6;
+    background: pink;
+    padding: 5px;
+    grid-area: s;
+}
