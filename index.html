@@ -1,16 +1,29 @@
 <html>
     <head>
-        <title>a brand new repo!</title>
+        <title>Slugpup Hungry Games</title>
         <link rel="shortcut icon" href="./assets/slugpup.png">
         <link rel="stylesheet" href="./style.css">
     </head>
     <body>
-        <div id="pups">
+        <div id="setup" style="right: 0%;">
+            <div id="pups"></div>
+            <button id="begin">Begin the Games</button>
         </div>
+        <div id="game" style="right: 100%;">
+            <div id="roundtitle"></div>
+            <div id="gamepups"></div>
+        </div>
+        <button id="nextround">Next Round</button>
+        <script type="module" src="./scripts/game.js"></script>
+        <script type="module" src="./scripts/globals.js"></script>
         <script type="module" src="./scripts/main.js"></script>
+        <script type="module" src="./scripts/slugpup.js"></script>
         <script type="module">
-            import { addPup } from "./scripts/main.js";
-            addPup();
+            import { addPup, beginGame } from "./scripts/main.js";
+            import { Game } from "./scripts/game.js";
+            addPup(); addPup(); addPup(); addPup();
+            document.getElementById("begin").onclick = beginGame;
+            document.getElementById("nextround").onclick = () => Game.nextRound();
         </script>
     </body>
 </html>

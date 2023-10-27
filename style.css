@@ -1,6 +1,9 @@
 html {
-    background: #333;
+    background: #111;
     color: white;
+}
+button {
+    cursor: pointer;
 }
 .pup {
     background: #555;
@@ -9,19 +12,22 @@ html {
     padding: 10px;
     display: grid;
     grid-template-columns: 120px 150px;
-    grid-template-rows: 40px 60px 30px;
+    grid-template-rows: 40px 40px 20px 30px;
     grid-template-areas:
         "i b s"
+        "i c s"
         "i . s"
-        "n n s";
+        "p n s";
 }
 .pupimg {
-    background: #c6a;
     border: 1px solid white;
     border-radius: 10px;
     padding: 5px;
     grid-area: i;
     width: 80px;
+}
+.small {
+    width: 30px;
 }
 .statbutton {
     background: #888;
@@ -29,20 +35,122 @@ html {
     border-radius: 10px;
     padding: 5px;
     color: white;
-    cursor: pointer;
     grid-area: b;
 }
-.name {
-    background: #aaa;
+.rollbutton {
+    background: #888;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 5px;
+    color: white;
+    grid-area: c;
+}
+.picker {
+    grid-area: p;
+}
+.pupname {
+    background: #888;
     border: 1px solid white;
     border-radius: 10px;
     padding: 2px;
     color: white;
     grid-area: n;
 }
+.pupname::placeholder {
+    color: white;
+}
 .pupstats {
-    opacity: 0.6;
-    background: pink;
-    padding: 5px;
+    padding: 0px;
+    margin-left: 30px;
+    transition: 0.25s;
     grid-area: s;
+}
+.statname {
+    display: inline-block;
+    width: 80px;
+}
+input[type="range"] {
+    appearance: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: 1rem;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 1rem;
+    border-radius: 1rem;
+}
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    background: #333;
+    height: 1rem;
+    width: 1rem;
+    border-radius: 50%; 
+}
+.txt {
+    opacity: 0;
+    user-select: none;
+    position: absolute;
+    color: white;
+    background: black;
+    transition: 0.1s;
+    border-radius: 10px;
+    padding: 5px;
+    z-index: 10;
+}
+.dummy:hover > .txt {
+    opacity: 1;
+}
+#begin, #nextround {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    background: forestgreen;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 5px;
+    color: white;
+    width: 200px;
+    height: calc(100% - 8px);
+}
+#nextround {
+    height: calc(100% - 8px);
+    z-index: 4;
+}
+#setup, #game {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #333;
+    transition: 0.7s;
+    z-index: 5;
+}
+#game {
+    z-index: 2;
+}
+#roundtitle {
+    text-align: center;
+}
+.action {
+    background: #555;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 5px;
+    height: 90px;
+}
+.actiontext {
+    margin-left: 30px;
+}
+.scoretext {
+    margin-left: 10px;
+}
+#scoreui {
+    background: #555;
+    border: 1px solid white;
+    border-radius: 10px;
+    padding: 5px;
+    position: absolute;
+    left: 4px;
+    bottom: 4px;
+    width: calc(100% - 8px);
 }
