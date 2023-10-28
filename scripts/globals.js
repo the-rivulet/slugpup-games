@@ -29,14 +29,24 @@ export var Stat;
     Stat["aggression"] = "aggression";
     Stat["dominance"] = "dominance";
 })(Stat || (Stat = {}));
-var RelationshipType;
-(function (RelationshipType) {
-    RelationshipType["default"] = "default";
-    RelationshipType["friends"] = "friends";
-})(RelationshipType || (RelationshipType = {}));
+export var RelationType;
+(function (RelationType) {
+    RelationType["default"] = "default";
+    RelationType["friends"] = "friends";
+})(RelationType || (RelationType = {}));
+export var DeathCause;
+(function (DeathCause) {
+    DeathCause["spearStab"] = "spear stab";
+    DeathCause["spearThrow"] = "spear throw";
+    DeathCause["grenadeExplosion"] = "grenade explosion";
+})(DeathCause || (DeathCause = {}));
 export var Item;
 (function (Item) {
     Item["empty"] = "empty";
     Item["spear"] = "spear";
     Item["grenade"] = "grenade";
 })(Item || (Item = {}));
+export var Perk;
+(function (Perk) {
+    Perk["hasty"] = "hasty";
+})(Perk || (Perk = {}));

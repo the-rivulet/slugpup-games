@@ -1,4 +1,4 @@
-import { getId, Stat, randomColor } from "./globals.js";
+import { getId, Stat, randomColor, choiceStr } from "./globals.js";
 import { Slugpup } from "./slugpup.js";
 import { Game } from "./game.js";
 
@@ -52,6 +52,17 @@ export function addPup() {
     pupUI.appendChild(picker);
     let name = document.createElement("input");
     name.placeholder = "Unnamed Slugpup";
+    let fakeName = "";
+    for(let j = 0; j < Math.floor(Math.random() * 3) + 2; j++) {
+        for(let k = 0; k < Math.floor(Math.random() * 3.5); k++) {
+            fakeName += choiceStr("bbcddfghjkllmnnnpqrrrssstttvwxyz");
+        }
+        fakeName += choiceStr("aeiou");
+    }
+    for(let k = 0; k < Math.floor(Math.random() * 2.5); k++) {
+        fakeName += choiceStr("bbcddfghjkllmnnnpqrrrssstttvwxyz");
+    }
+    name.value = fakeName[0].toUpperCase() + fakeName.slice(1);
     name.classList.add("pupname");
     pupUI.appendChild(name);
     let stats = document.createElement("div");
@@ -91,7 +102,7 @@ export function beginGame() {
         let statbars = Array.from(i.getElementsByClassName("statbar")) as HTMLInputElement[];
         let pup = new Slugpup();
         pup.color = (i.getElementsByClassName("statbar")[0] as HTMLElement).style.background;
-        pup.name = (i.parentElement.parentElement.parentElement.getElementsByClassName("pupname")[0] as HTMLInputElement).value || "an unnamed slugpup";
+        pup.name = (i.getElementsByClassName("pupname")[0] as HTMLInputElement).value || "an unnamed slugpup";
         let x = 0;
         for(let i of Object.keys(Stat).slice(0, 6)) {
             pup.stats[Stat[i]] = statbars[x].value; x++;

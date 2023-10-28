@@ -47,19 +47,29 @@ export interface Action {
     effect?: (pups: Slugpup[]) => void;
 }
 
-enum RelationshipType {
+export enum RelationType {
     default = "default",
     friends = "friends"
 }
 
-export interface Relationship {
+export interface Relation {
     source: Slugpup;
     target: Slugpup;
-    type: RelationshipType;
+    type: RelationType;
+}
+
+export enum DeathCause {
+    spearStab = "spear stab",
+    spearThrow = "spear throw",
+    grenadeExplosion = "grenade explosion"
 }
 
 export enum Item {
     empty = "empty",
     spear = "spear",
     grenade = "grenade"
+}
+
+export enum Perk {
+    hasty = "hasty"
 }
