@@ -1,5 +1,5 @@
 import { Game } from "./game.js";
-import { Stat, Item, choice, ActionData, DeathCause, RelationType, Perk } from "./globals.js";
+import { Stat, Item, choice, ActionData, DeathCause, RelationType, Perk, Creature } from "./globals.js";
 
 export interface SlugpupStats {
     sympathy: number;
@@ -10,26 +10,29 @@ export interface SlugpupStats {
     dominance: number;
 }
 
-export class Slugpup {
-    name: string;
+export class Slugpup extends Creature {
     stats: SlugpupStats;
-    color: string;
     action: ActionData;
     item = Item.empty;
     perks: Perk[] = [];
     kills = 0;
+    xp = 0;
     dead = false;
     deathCause: DeathCause;
-    killedBy: Slugpup;
+    killedBy: Creature;
     hasInitiated = false;
     hasActed = false;
     constructor() {
+        super("an unnamed slugpup", "#000000");
         let s = {};
         for(let i of Object.keys(Stat)) s[i] = Math.random();
         this.stats = s as SlugpupStats;
     }
     bias(stat: Stat, weight: number) {
         return (this.stats[stat] - 50) * weight * 1/50;
+    }
+    friend(weight: number) {
+      return (this.bias(Stat.sympathy, weight) + this.bias(Stat.dominance, -0.5 * weight));
     }
     dodge(weight: number) {
         let multi = 1;
@@ -38,7 +41,8 @@ export class Slugpup {
     }
     attack(attackWeight: number, dodgeWeight = 0, ...targets: Slugpup[]) {
         let multi = 1;
-        if(targets.filter(x => this.relationWith(x).shared == RelationType.friends)) multi *= 0.1;
+        if(targets.filter(x => this.relationWith(x).shared == RelationType.friends).length) multi *= 0.2;
+        if(targets.filter(x => this.relationWith(x).shared == RelationType.swornEnemies).length) multi *= 3;
         return multi * (this.bias(Stat.sympathy, -1 * attackWeight) + this.bias(Stat.aggression, attackWeight) + targets.reduce((p, c) => p + c.dodge(dodgeWeight), 0));
     }
     selectAction() {
@@ -49,10 +53,13 @@ export class Slugpup {
         let pool: ActionData[] = [];
         for(let i of Game.actionPool) {
             let pups: Slugpup[] = [this];
+            let failed = false;
             while(pups.length < i.pups) {
                 let remain = Game.pups.filter(x => !x.dead && !pups.includes(x));
+                if(!remain.length) {failed = true; break};
                 pups.push(choice(remain));
             }
+            if(failed) continue;
             if(i.req && !i.req(pups)) continue;
             let chance = i.chance + (i.bias ? i.bias(pups) : 0);
             while(chance > 0) {
@@ -61,7 +68,7 @@ export class Slugpup {
             }
         }
         if(pool.length) this.action = choice(pool);
-        else this.action = {action: undefined, pups: []};
+        else this.selectAction(); // keep picking
     }
     relationWith(pup: Slugpup) {
         let forth = RelationType.default, back = RelationType.default;
@@ -75,18 +82,21 @@ export class Slugpup {
             either: forth == RelationType.default ? back : forth
         };
     }
-    relationIs(pup: Slugpup, relation: RelationType) {
-        return this.relationWith(pup).forth == relation || this.relationWith(pup).back == relation;
+    anyRelation(pup: Slugpup, ...relations: RelationType[]) {
+        return relations.includes(this.relationWith(pup).forth) || relations.includes(this.relationWith(pup).back);
     }
     become(relationship: RelationType, pup: Slugpup, twoWay = false) {
         Game.relations = Game.relations.filter(x => x.source != this || x.target != pup);
         Game.relations.push({source: this, target: pup, type: relationship});
         if(twoWay) pup.become(relationship, this);
     }
-    die(cause: DeathCause, killer: Slugpup) {
+    die(cause: DeathCause, killer?: Creature) {
         this.dead = true;
         this.deathCause = cause;
         this.killedBy = killer;
-        if(killer) killer.kills++;
+        if(killer instanceof Slugpup) {
+            killer.kills++;
+            if(this != killer) killer.xp += 10;
+        }
     }
 }

@@ -14,12 +14,6 @@ export let choiceStr = (x) => x[Math.floor(Math.random() * x.length)];
 export let randomColor = () => "#" +
     choiceStr("0123456789abcdef") + choiceStr("0123456789abcdef") + choiceStr("0123456789abcdef") +
     choiceStr("0123456789abcdef") + choiceStr("0123456789abcdef") + choiceStr("0123456789abcdef");
-document.onmousemove = function (e) {
-    for (let i of document.getElementsByClassName("txt")) {
-        i.style.top = (e.clientY + 30).toString();
-        i.style.left = (e.clientX - 30).toString();
-    }
-};
 export var Stat;
 (function (Stat) {
     Stat["sympathy"] = "sympathy";
@@ -29,24 +23,42 @@ export var Stat;
     Stat["aggression"] = "aggression";
     Stat["dominance"] = "dominance";
 })(Stat || (Stat = {}));
+export class Creature {
+    name;
+    color;
+    constructor(name, color) {
+        this.name = name;
+        this.color = color;
+    }
+}
 export var RelationType;
 (function (RelationType) {
     RelationType["default"] = "default";
     RelationType["friends"] = "friends";
+    RelationType["swornEnemies"] = "sworn enemies";
 })(RelationType || (RelationType = {}));
 export var DeathCause;
 (function (DeathCause) {
-    DeathCause["spearStab"] = "spear stab";
+    DeathCause["backstab"] = "spear backstab";
     DeathCause["spearThrow"] = "spear throw";
     DeathCause["grenadeExplosion"] = "grenade explosion";
+    DeathCause["suicide"] = "suicide";
+    DeathCause["brawl"] = "brawl";
+    DeathCause["lizard"] = "lizard bite";
+    DeathCause["dropwig"] = "dropwig slash";
 })(DeathCause || (DeathCause = {}));
 export var Item;
 (function (Item) {
     Item["empty"] = "empty";
     Item["spear"] = "spear";
     Item["grenade"] = "grenade";
+    Item["pearl"] = "pearl";
 })(Item || (Item = {}));
 export var Perk;
 (function (Perk) {
     Perk["hasty"] = "hasty";
+    Perk["suicidal"] = "suicidal";
+    Perk["tamedLizard"] = "tamed lizard";
+    Perk["highRep"] = "good scavenger reputation";
+    Perk["lowRep"] = "bad scavenger reputation";
 })(Perk || (Perk = {}));

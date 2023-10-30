@@ -17,13 +17,6 @@ export let randomColor = () => "#" +
     choiceStr("0123456789abcdef") + choiceStr("0123456789abcdef") + choiceStr("0123456789abcdef") +
     choiceStr("0123456789abcdef") + choiceStr("0123456789abcdef") + choiceStr("0123456789abcdef");
 
-document.onmousemove = function(e) {
-    for(let i of document.getElementsByClassName("txt")) {
-        (i as HTMLElement).style.top = (e.clientY + 30).toString();
-        (i as HTMLElement).style.left = (e.clientX - 30).toString();
-    }
-}
-
 export enum Stat {
     sympathy = "sympathy",
     bravery = "bravery",
@@ -31,6 +24,15 @@ export enum Stat {
     nervousness = "nervousness",
     aggression = "aggression",
     dominance = "dominance"
+}
+
+export class Creature {
+    name: string;
+    color: string;
+    constructor(name: string, color: string) {
+        this.name = name;
+        this.color = color;
+    }
 }
 
 export interface ActionData {
@@ -49,7 +51,8 @@ export interface Action {
 
 export enum RelationType {
     default = "default",
-    friends = "friends"
+    friends = "friends",
+    swornEnemies = "sworn enemies"
 }
 
 export interface Relation {
@@ -59,17 +62,26 @@ export interface Relation {
 }
 
 export enum DeathCause {
-    spearStab = "spear stab",
+    backstab = "spear backstab",
     spearThrow = "spear throw",
-    grenadeExplosion = "grenade explosion"
+    grenadeExplosion = "grenade explosion",
+    suicide = "suicide",
+    brawl = "brawl",
+    lizard = "lizard bite",
+    dropwig = "dropwig slash"
 }
 
 export enum Item {
     empty = "empty",
     spear = "spear",
-    grenade = "grenade"
+    grenade = "grenade",
+    pearl = "pearl"
 }
 
 export enum Perk {
-    hasty = "hasty"
+    hasty = "hasty",
+    suicidal = "suicidal",
+    tamedLizard = "tamed lizard",
+    highRep = "good scavenger reputation",
+    lowRep = "bad scavenger reputation"
 }
