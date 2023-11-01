@@ -22,6 +22,7 @@ export class Slugpup extends Creature {
     killedBy: Creature;
     hasInitiated = false;
     hasActed = false;
+    output: string;
     constructor() {
         super("an unnamed slugpup", "#000000");
         let s = {};
@@ -41,7 +42,7 @@ export class Slugpup extends Creature {
     }
     attack(attackWeight: number, dodgeWeight = 0, ...targets: Slugpup[]) {
         let multi = 1;
-        if(targets.filter(x => this.relationWith(x).shared == RelationType.friends).length) multi *= 0.2;
+        if(targets.filter(x => this.relationWith(x).shared == RelationType.friends).length) multi *= 0.1;
         if(targets.filter(x => this.relationWith(x).shared == RelationType.swornEnemies).length) multi *= 3;
         return multi * (this.bias(Stat.sympathy, -1 * attackWeight) + this.bias(Stat.aggression, attackWeight) + targets.reduce((p, c) => p + c.dodge(dodgeWeight), 0));
     }

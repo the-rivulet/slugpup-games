@@ -159,8 +159,6 @@ input[type="range"]::-webkit-slider-thumb {
     border: 1px solid white;
     border-radius: 10px;
     padding: 5px;
-    position: absolute;
     left: 4px;
-    bottom: 4px;
     width: calc(100% - 8px);
 }

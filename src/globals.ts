@@ -46,7 +46,7 @@ export interface Action {
     chance: number;
     bias?: (pups: Slugpup[]) => number;
     req?: (pups: Slugpup[]) => boolean;
-    effect?: (pups: Slugpup[]) => void;
+    effect?: (pups: Slugpup[]) => void | string;
 }
 
 export enum RelationType {

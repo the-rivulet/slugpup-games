@@ -22,7 +22,7 @@
         <script type="module">
             import { addPup, beginGame } from "./scripts/main.js";
             import { Game } from "./scripts/game.js";
-            addPup(); addPup(); addPup(); addPup();
+            for(let i = 0; i < 8; i++) addPup();
             document.getElementById("begin").onclick = beginGame;
             document.getElementById("nextround").onclick = () => Game.nextRound();
         </script>
