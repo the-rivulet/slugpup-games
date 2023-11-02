@@ -35,17 +35,21 @@ export var RelationType;
 (function (RelationType) {
     RelationType["default"] = "default";
     RelationType["friends"] = "friends";
-    RelationType["swornEnemies"] = "sworn enemies";
+    RelationType["swornEnemies"] = "annoyed";
 })(RelationType || (RelationType = {}));
 export var DeathCause;
 (function (DeathCause) {
-    DeathCause["backstab"] = "spear backstab";
+    DeathCause["backstab"] = "stab";
     DeathCause["spearThrow"] = "spear throw";
     DeathCause["grenadeExplosion"] = "grenade explosion";
     DeathCause["suicide"] = "suicide";
-    DeathCause["brawl"] = "brawl";
+    DeathCause["brawl"] = "melee";
     DeathCause["lizard"] = "lizard bite";
     DeathCause["dropwig"] = "dropwig slash";
+    DeathCause["vulture"] = "vulture";
+    DeathCause["shock"] = "shocked";
+    DeathCause["polePlant"] = "snatched";
+    DeathCause["drowning"] = "drowning";
 })(DeathCause || (DeathCause = {}));
 export var Item;
 (function (Item) {
@@ -53,6 +57,7 @@ export var Item;
     Item["spear"] = "spear";
     Item["grenade"] = "grenade";
     Item["pearl"] = "pearl";
+    Item["flashbang"] = "flashbang";
 })(Item || (Item = {}));
 export var Perk;
 (function (Perk) {

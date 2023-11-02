@@ -24,7 +24,7 @@ export function addPup() {
             statsElem.style.opacity = "1";
         }
     }
-    btn.classList.add("statbutton");
+    btn.classList.add("statbutton", "core");
     pupUI.appendChild(btn);
     let btn2 = document.createElement("button");
     btn2.textContent = "Randomize Stats";
@@ -39,7 +39,7 @@ export function addPup() {
             txt.textContent = stat + ": " + value;
         }
     }
-    btn2.classList.add("rollbutton");
+    btn2.classList.add("rollbutton", "core");
     pupUI.appendChild(btn2);
     let picker = document.createElement("input");
     picker.type = "color";
@@ -63,8 +63,38 @@ export function addPup() {
         fakeName += choiceStr("bbcddfghjkllmnnnpqrrrssstttvwxyz");
     }
     name.value = fakeName[0].toUpperCase() + fakeName.slice(1);
-    name.classList.add("pupname");
+    name.classList.add("pupname", "core");
     pupUI.appendChild(name);
+    let customPrns = document.createElement("div");
+    customPrns.classList.add("customprns");
+    customPrns.style.opacity = "0";
+    customPrns.innerText = "Set custom pronouns: ";
+    for(let i of ["they", "them", "their"]) {
+        let input = document.createElement("input");
+        input.classList.add("customprn", "core", i);
+        input.placeholder = i;
+        customPrns.appendChild(input);
+        if(i != "their") customPrns.insertAdjacentText("beforeend", " / ");
+    }
+    let prns = document.createElement("select");
+    prns.classList.add("pronouns");
+    let selected = false;
+    for(let i of ["he/him", "she/her", "they/them", "custom"]) {
+        let option = document.createElement("option");
+        option.value = i;
+        option.innerText = i;
+        if(!selected && (i == "they/them" || Math.random() < 0.3)) {
+            selected = true;
+            option.selected = true;
+        }
+        prns.appendChild(option);
+    }
+    prns.onchange = function() {
+        if(prns.value == "custom") customPrns.style.opacity = "1";
+        else customPrns.style.opacity = "0";
+    }
+    pupUI.appendChild(prns);
+    pupUI.appendChild(customPrns);
     let stats = document.createElement("div");
     stats.classList.add("pupstats");
     for(let i of Object.keys(Stat)) {
@@ -96,13 +126,23 @@ export function addPup() {
     pups.appendChild(pupUI);
 }
 
-export function beginGame() {
+export function beginGame() { try {
     let pups = Array.from(getId("pups").children);
     for(let i of pups) {
         let statbars = Array.from(i.getElementsByClassName("statbar")) as HTMLInputElement[];
         let pup = new Slugpup();
         pup.color = (i.getElementsByClassName("statbar")[0] as HTMLElement).style.background;
         pup.name = (i.getElementsByClassName("pupname")[0] as HTMLInputElement).value || "an unnamed slugpup";
+        let prns = (i.getElementsByClassName("pronouns")[0] as HTMLSelectElement).value;
+        if(prns == "custom") {
+            let they = (i.getElementsByClassName("they")[0] as HTMLInputElement).value || "they";
+            let them = (i.getElementsByClassName("them")[0] as HTMLInputElement).value || "them";
+            let their = (i.getElementsByClassName("their")[0] as HTMLInputElement).value || "their";
+            pup.pronouns = {they: they, them: them, their: their};
+        } else {
+            let parts = prns.split("/");
+            pup.pronouns = {they: parts[0], them: parts[1], their: parts[0] == "they" ? "their" : parts[0] == "he" ? "his" : parts[1]};
+        }
         let x = 0;
         for(let i of Object.keys(Stat).slice(0, 6)) {
             pup.stats[Stat[i]] = statbars[x].value; x++;
@@ -111,4 +151,4 @@ export function beginGame() {
     }
     getId("setup").style.right = "100%";
     Game.nextRound();
-}
+} catch(e) { alert(e); } }

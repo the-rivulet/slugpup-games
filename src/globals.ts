@@ -52,7 +52,7 @@ export interface Action {
 export enum RelationType {
     default = "default",
     friends = "friends",
-    swornEnemies = "sworn enemies"
+    swornEnemies = "annoyed"
 }
 
 export interface Relation {
@@ -62,20 +62,25 @@ export interface Relation {
 }
 
 export enum DeathCause {
-    backstab = "spear backstab",
+    backstab = "stab",
     spearThrow = "spear throw",
     grenadeExplosion = "grenade explosion",
     suicide = "suicide",
-    brawl = "brawl",
+    brawl = "melee",
     lizard = "lizard bite",
-    dropwig = "dropwig slash"
+    dropwig = "dropwig slash",
+    vulture = "vulture",
+    shock = "shocked",
+    polePlant = "snatched",
+    drowning = "drowning"
 }
 
 export enum Item {
     empty = "empty",
     spear = "spear",
     grenade = "grenade",
-    pearl = "pearl"
+    pearl = "pearl",
+    flashbang = "flashbang"
 }
 
 export enum Perk {

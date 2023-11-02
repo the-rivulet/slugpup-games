@@ -13,12 +13,16 @@ export class Slugpup extends Creature {
     hasInitiated = false;
     hasActed = false;
     output;
+    pronouns;
     constructor() {
         super("an unnamed slugpup", "#000000");
         let s = {};
         for (let i of Object.keys(Stat))
             s[i] = Math.random();
         this.stats = s;
+    }
+    get realKills() {
+        return this.kills - (this.killedBy == this ? 1 : 0);
     }
     bias(stat, weight) {
         return (this.stats[stat] - 50) * weight * 1 / 50;
@@ -29,7 +33,7 @@ export class Slugpup extends Creature {
     dodge(weight) {
         let multi = 1;
         if (this.perks.includes(Perk.hasty))
-            multi *= 2;
+            multi *= 3;
         return multi * (this.bias(Stat.nervousness, weight) + this.bias(Stat.aggression, weight));
     }
     attack(attackWeight, dodgeWeight = 0, ...targets) {

@@ -10,6 +10,12 @@ export interface SlugpupStats {
     dominance: number;
 }
 
+interface SlugPronouns {
+    they: string;
+    them: string;
+    their: string;
+}
+
 export class Slugpup extends Creature {
     stats: SlugpupStats;
     action: ActionData;
@@ -23,11 +29,15 @@ export class Slugpup extends Creature {
     hasInitiated = false;
     hasActed = false;
     output: string;
+    pronouns: SlugPronouns;
     constructor() {
         super("an unnamed slugpup", "#000000");
         let s = {};
         for(let i of Object.keys(Stat)) s[i] = Math.random();
         this.stats = s as SlugpupStats;
+    }
+    get realKills() {
+        return this.kills - (this.killedBy == this ? 1 : 0);
     }
     bias(stat: Stat, weight: number) {
         return (this.stats[stat] - 50) * weight * 1/50;
@@ -37,7 +47,7 @@ export class Slugpup extends Creature {
     }
     dodge(weight: number) {
         let multi = 1;
-        if(this.perks.includes(Perk.hasty)) multi *= 2;
+        if(this.perks.includes(Perk.hasty)) multi *= 3;
         return multi * (this.bias(Stat.nervousness, weight) + this.bias(Stat.aggression, weight));
     }
     attack(attackWeight: number, dodgeWeight = 0, ...targets: Slugpup[]) {
