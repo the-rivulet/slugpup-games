@@ -235,7 +235,6 @@ export class Game {
                     text.insertAdjacentText("beforeend", " by ");
                     let coloredText = document.createElement("b");
                     coloredText.style.color = i.killedBy.color;
-                    coloredText.style.webkitTextStroke = "0.3px white";
                     coloredText.textContent = i.killedBy.name;
                     text.appendChild(coloredText);
                     if(i.killedBy instanceof Slugpup && i.killedBy.dead) text.insertAdjacentText("beforeend", "†");
